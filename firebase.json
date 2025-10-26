@@ -1,0 +1,76 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "buildConfigurations": {
+          "src/develop": {
+            "projectId": "tmi-base-fa0f6",
+            "appId": "1:1018869674720:android:2ea5bed698cbc1f4ee9685",
+            "fileOutput": "android/app/src/develop/google-services.json"
+          },
+          "src/staging": {
+            "projectId": "tmi-base-fa0f6",
+            "appId": "1:1018869674720:android:96a7f1c81f386fcdee9685",
+            "fileOutput": "android/app/src/staging/google-services.json"
+          },
+          "src/production": {
+            "projectId": "tmi-base-fa0f6",
+            "appId": "1:1018869674720:android:39b40359d903f09bee9685",
+            "fileOutput": "android/app/src/production/google-services.json"
+          }
+        }
+      },
+      "ios": {
+        "buildConfigurations": {
+          "developDebug": {
+            "projectId": "tmi-base-fa0f6",
+            "appId": "1:1018869674720:ios:cd0135e903b984a3ee9685",
+            "uploadDebugSymbols": true,
+            "fileOutput": "ios/flavors/develop/GoogleService-Info.plist"
+          },
+          "stagingDebug": {
+            "projectId": "tmi-base-fa0f6",
+            "appId": "1:1018869674720:ios:0d3ed14a7776d0b2ee9685",
+            "uploadDebugSymbols": true,
+            "fileOutput": "ios/flavors/staging/GoogleService-Info.plist"
+          },
+          "productionDebug": {
+            "projectId": "tmi-base-fa0f6",
+            "appId": "1:1018869674720:ios:17c23dc17dda1ceeee9685",
+            "uploadDebugSymbols": true,
+            "fileOutput": "ios/flavors/production/GoogleService-Info.plist"
+          },
+          "developRelease": {
+            "projectId": "tmi-base-fa0f6",
+            "appId": "1:1018869674720:ios:cd0135e903b984a3ee9685",
+            "uploadDebugSymbols": true,
+            "fileOutput": "ios/flavors/develop/GoogleService-Info.plist"
+          }
+        }
+      },
+      "dart": {
+        "lib/firebase_options_dev.dart": {
+          "projectId": "tmi-base-fa0f6",
+          "configurations": {
+            "android": "1:1018869674720:android:2ea5bed698cbc1f4ee9685",
+            "ios": "1:1018869674720:ios:cd0135e903b984a3ee9685"
+          }
+        },
+        "lib/firebase_options_stg.dart": {
+          "projectId": "tmi-base-fa0f6",
+          "configurations": {
+            "android": "1:1018869674720:android:96a7f1c81f386fcdee9685",
+            "ios": "1:1018869674720:ios:0d3ed14a7776d0b2ee9685"
+          }
+        },
+        "lib/firebase_options_prod.dart": {
+          "projectId": "tmi-base-fa0f6",
+          "configurations": {
+            "android": "1:1018869674720:android:39b40359d903f09bee9685",
+            "ios": "1:1018869674720:ios:17c23dc17dda1ceeee9685"
+          }
+        }
+      }
+    }
+  }
+}

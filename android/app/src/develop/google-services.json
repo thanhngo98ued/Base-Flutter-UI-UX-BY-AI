@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "1018869674720",
+    "project_id": "tmi-base-fa0f6",
+    "storage_bucket": "tmi-base-fa0f6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018869674720:android:39b40359d903f09bee9685",
+        "android_client_info": {
+          "package_name": "com.tmi.base"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjWq3s_pS2Q3g2S-8tvTihZGwumTe38s0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018869674720:android:2ea5bed698cbc1f4ee9685",
+        "android_client_info": {
+          "package_name": "com.tmi.base.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjWq3s_pS2Q3g2S-8tvTihZGwumTe38s0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018869674720:android:96a7f1c81f386fcdee9685",
+        "android_client_info": {
+          "package_name": "com.tmi.base.stg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjWq3s_pS2Q3g2S-8tvTihZGwumTe38s0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

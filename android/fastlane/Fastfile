@@ -1,0 +1,45 @@
+platform :android do
+  # Get version from pubspec.yaml
+  private_lane :get_flutter_version do
+    version_line = File.read("../../pubspec.yaml").match(/^version:\s*(.*)$/)[1]
+    version_name, build_number = version_line.split("+")
+    {
+      version_name: version_name.strip,
+      build_number: build_number.strip.to_i
+    }
+  end
+
+  desc "🚀 Release to Firebase (dynamic flavor)"
+  lane :release_to_firebase do |options|
+    flavor = options[:flavor] || "develop"
+    app_id = {
+      "develop" => "1:1018869674720:android:2ea5bed698cbc1f4ee9685",
+      "staging" => "1:1018869674720:android:96a7f1c81f386fcdee9685",
+      "production" => "1:1018869674720:android:39b40359d903f09bee9685"
+    }[flavor]
+
+    # Get version from pubspec.yaml
+    version_info = get_flutter_version
+    version_code = version_info[:build_number]
+    version_name = version_info[:version_name]
+
+    # Ask for release note
+    release_notes = prompt(
+      text: "📋 Enter release notes (type END on a new line to finish):",
+      multi_line_end_keyword: "END"
+    )
+
+    # Build APK
+    sh("flutter build apk --release --flavor #{flavor} --dart-define-from-file=.env/.env.#{flavor}")
+
+    # Distribute to Firebase
+    firebase_app_distribution(
+      app: app_id,
+      groups: "base-test",
+      release_notes: "🚀 v#{version_name} (Build #{version_code})\n\n#{release_notes}",
+      apk_path: "../build/app/outputs/flutter-apk/app-#{flavor}-release.apk"
+    )
+
+    UI.success "✅ Build and upload for #{flavor} done!"
+  end
+end

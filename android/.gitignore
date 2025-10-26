@@ -1,0 +1,53 @@
+# --------------------
+# System
+.DS_Store
+*.log
+*.swp
+*.class
+*.pyc
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub/
+.pub-cache/
+build/
+*.gen.dart
+*.g.dart
+
+# Fastlane
+/fastlane/key/
+
+# Android build outputs
+app/debug/
+app/profile/
+app/release/
+
+# Gradle
+.gradle/
+**/local.properties
+**/.cxx/
+
+# Native artifacts
+**/*.cmake
+**/*.txt
+**/*.o
+**/*.so
+**/*.bin
+**/*.lock
+
+# Obfuscation/symbolication
+app.*.map.json
+app.*.symbols
+
+# Environment
+.env
+.env.*

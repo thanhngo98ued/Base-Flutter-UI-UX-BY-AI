@@ -1,0 +1,115 @@
+default_platform(:ios)
+
+# MARK: - Flavor Config
+FLAVOR_SCHEMES = {
+  develop: {
+    scheme: "develop",
+    configuration: "Dev Release",
+    bundle_id: "com.tmi.base.dev",
+    firebase_app_id: "1:1018869674720:ios:cd0135e903b984a3ee9685",
+    export_options_plist: "Exports/Develop/DevExportOptions.plist",
+    env_file: ".env/.env.develop"
+  },
+  staging: {
+    scheme: "staging",
+    configuration: "Staging Release",
+    bundle_id: "com.tmi.base.stg",
+    firebase_app_id: "your_staging_firebase_app_id",
+    export_options_plist: "Exports/Staging/StagingExportOptions.plist",
+    env_file: ".env/.env.staging"
+  },
+  production: {
+    scheme: "production",
+    configuration: "Release",
+    bundle_id: "com.tmi.base",
+    firebase_app_id: "your_production_firebase_app_id",
+    export_options_plist: "Exports/Production/ProdExportOptions.plist",
+    env_file: ".env/.env.production"
+  }
+}
+
+platform :ios do
+  before_all do
+    ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
+  end
+
+  desc "🚀 Deploy iOS to Firebase App Distribution (development profile)"
+  lane :deploy_firebase do |options|
+    flavor = (options[:flavor] || "develop").to_sym
+    config = FLAVOR_SCHEMES[flavor]
+
+    UI.user_error!("❌ Unknown flavor: #{flavor}") unless config
+
+    scheme = config[:scheme]
+    configuration = config[:configuration]
+    firebase_app_id = config[:firebase_app_id]
+    plist_path = config[:export_options_plist]
+    env_file = config[:env_file]
+
+    version_info = get_flutter_version
+    version_name = version_info[:version_name]
+    build_number = version_info[:build_number]
+
+    release_notes = prompt(
+      text: "📋 Enter release notes (type END on a new line to finish):",
+      multi_line_end_keyword: "END"
+    )
+
+    make_build_folder
+    build_flutter(flavor: flavor.to_s, env_file: env_file)
+    archive_with(
+      scheme: scheme,
+      configuration: configuration,
+      export_options_plist: plist_path
+    )
+    upload_firebase(
+      firebase_app_id: firebase_app_id,
+      release_note: "🚀 v#{version_name} (Build #{build_number})\n\n#{release_notes}"
+    )
+  end
+
+  # MARK: - Private lanes
+
+  private_lane :get_flutter_version do
+    version_line = File.read("../../pubspec.yaml").match(/^version:\s*(.*)$/)[1]
+    version_name, build_number = version_line.split("+")
+    {
+      version_name: version_name.strip,
+      build_number: build_number.strip.to_i
+    }
+  end
+
+  private_lane :make_build_folder do
+    sh "rm -rf ../build"
+    sh "mkdir -p ../build"
+  end
+
+  private_lane :build_flutter do |options|
+    flavor = options[:flavor]
+    env_file = options[:env_file]
+    sh("cd ../.. && flutter build ipa --flavor #{flavor} --release --dart-define-from-file=#{env_file}")
+  end
+
+  private_lane :archive_with do |options|
+    build_app(
+      scheme: options[:scheme],
+      configuration: options[:configuration],
+      clean: true,
+      output_directory: "../build",
+      include_bitcode: false,
+      skip_profile_detection: true,
+      export_options: options[:export_options_plist]
+    )
+  end
+
+  private_lane :upload_firebase do |options|
+    firebase_app_distribution(
+      app: options[:firebase_app_id],
+      firebase_cli_token: ENV["FIREBASE_TOKEN"],
+      ipa_path: Actions.lane_context[SharedValues::IPA_OUTPUT_PATH],
+      release_notes: options[:release_note],
+      testers: ENV["FIREBASE_TESTERS"] || "",
+      debug: true
+    )
+  end
+end

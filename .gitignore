@@ -1,0 +1,50 @@
+# --------------------
+# General
+.DS_Store
+*.log
+*.swp
+*.class
+*.pyc
+
+# System folders
+.history
+.svn/
+.idea/
+.vscode/
+
+# Dart/Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+**/build/
+**/doc/api/
+*.gen.dart
+*.g.dart
+
+# FVM
+.fvm/
+
+# Android build outputs
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# iOS Flutter build id
+**/ios/Flutter/.last_build_id
+
+# Obfuscation/symbolication
+app.*.map.json
+app.*.symbols
+
+# Environment
+.env
+.env.*
+
+# Secrets / Keys
+/distribution/credentials/
+/fastlane/key/
+
+# Local migration workdir
+migrate_working_dir/

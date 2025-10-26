@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="background_color">#070A11</color>
+    <color name="manatee">#959699</color>
+    <color name="mirage">#101622</color>
+    <color name="ebony_clay">#282C42</color>
+    <color name="cranberry">#D951A5</color>
+    <color name="cornflower_blue">#6E7BFC</color>
+    <color name="heliotrope">#B24CF3</color>
+</resources>
+

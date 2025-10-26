@@ -1,0 +1,48 @@
+version: 2.1
+
+orbs:
+  flutter: circleci/flutter@2.0.0
+
+references:
+  cache_key: &cache_key
+    key: flutter-deps-{{ checksum "pubspec.yaml" }}-{{ checksum "pubspec.lock" }}
+
+config_flutter: &config_flutter
+  working_directory: ~/code
+  docker:
+    - image: "ghcr.io/cirruslabs/flutter:latest"
+  environment:
+    FLUTTER_VERSION: stable
+    JVM_OPTS: -Xmx4g
+
+jobs:
+  build-and-test:
+    <<: *config_flutter
+    steps:
+      - checkout
+      - restore_cache:
+          <<: *cache_key
+      - run:
+          name: Install Flutter Dependencies
+          command: flutter pub get
+      - run:
+          name: Generate code
+          command: dart run build_runner build --delete-conflicting-outputs
+      - run:
+          name: Run Flutter Tests
+          command: flutter test
+      - save_cache:
+          <<: *cache_key
+          paths:
+            - ~/.pub-cache
+      - store_test_results:
+          path: test-results
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - build-and-test:
+          filters:
+            branches:
+              ignore: main
